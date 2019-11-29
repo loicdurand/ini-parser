@@ -17,6 +17,8 @@ const parser = (ini, result = {}) => {
             if (section) {
 
                 mem = section;
+                if (!result[mem])
+                    result[mem] = {};
 
             } else {
 
@@ -43,7 +45,8 @@ const parser = (ini, result = {}) => {
                 if (key.length > 2 && key.slice(-2) === '[]') {
                     key = key.substring(0, key.length - 2);
                     if (mem) {
-                        if (result[mem] && !result[mem][key])
+                        
+                        if (!result[mem][key])
                             result[mem][key] = []
                         result[mem][key].push(value);
                     } else {
@@ -59,9 +62,6 @@ const parser = (ini, result = {}) => {
                         result[key] = value;
                     } else {
                         // affectations dans une section -> objet
-                        if (!result[mem])
-                            result[mem] = {};
-
                         result[mem][key] = value;
                     }
                 }

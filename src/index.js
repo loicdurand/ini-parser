@@ -41,11 +41,16 @@ const parser = (ini, result = {}) => {
 
                 // création des tableaux
                 if (key.length > 2 && key.slice(-2) === '[]') {
-
                     key = key.substring(0, key.length - 2);
-                    if (!result[key])
-                        result[key] = [];
-                    result[key].push(value);
+                    if (mem) {
+                        if (result[mem] && !result[mem][key])
+                            result[mem][key] = []
+                        result[mem][key].push(value);
+                    } else {
+                        if (!result[key])
+                            result[key] = [];
+                        result[key].push(value);
+                    }
 
                 } else {
 
